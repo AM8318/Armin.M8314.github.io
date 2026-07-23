@@ -1,6 +1,6 @@
 # Armin Moallemi — CV & Portfolio Website
 
-A production-ready, responsive one-page portfolio built from Armin Moallemi's résumé and supplied portrait. The site is designed for recruiters, academic contacts, and industry professionals, with email and WhatsApp contact actions available in the hero, contact section, and floating quick-contact controls.
+A production-ready, responsive one-page portfolio built from Armin Moallemi's résumé and supplied portrait. The site is designed for recruiters, academic contacts, and industry professionals, with email contact actions available in the hero, contact section, and floating quick-contact control.
 
 ## Technology
 
@@ -49,14 +49,14 @@ Before publishing on a custom domain:
 1. Add the canonical production URL with `<link rel="canonical" href="https://your-domain.example/">`.
 2. Add the same absolute URL to `og:url`.
 3. Replace relative schema image paths with absolute production URLs if required by the target search platform.
-4. Test email, telephone, WhatsApp, and LinkedIn links on both desktop and mobile.
+4. Test email, telephone, and LinkedIn links on both desktop and mobile.
 
 ## Content and contact maintenance
 
 Primary contact details are currently present in several visitor-facing and metadata locations:
 
 - Email: `armin8314@gmail.com`
-- Phone/WhatsApp: `+1 437-989-9351`
+- Phone: `+1 437-989-9351`
 - LinkedIn: `linkedin.com/in/armin-moallemi-43057739b`
 
 When a contact detail changes, search `index.html` for the old value and update every occurrence, including the JSON-LD structured data.
@@ -113,7 +113,7 @@ Use current versions of Chrome, Edge, Firefox, or Safari. Bootstrap and the cust
 
 ## Asset guidance
 
-The supplied portrait is stored at `assets/armin-moallemi-portrait.jpg`. If it is replaced, preserve the filename or update the image path in the HTML, Open Graph metadata, and JSON-LD. Use an optimized JPEG or WebP with an appropriate aspect ratio and keep the alternative text accurate.
+The supplied portrait is stored at `assets/armin-moallemi-portrait.jpg` and displayed uncropped in its original 2:3 aspect ratio. If it is replaced, preserve the filename or update the image path in the HTML, Open Graph metadata, and JSON-LD. Use an optimized JPEG or WebP and keep the alternative text accurate.
 
 ## Quality checklist
 
