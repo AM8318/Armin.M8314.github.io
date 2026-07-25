@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Armin Moallemi secure monogram</title>
+  <rect width="64" height="64" rx="12" fill="#07111f"/>
+  <path d="M32 7 53 15v15c0 13.5-8.5 22.2-21 27C19.5 52.2 11 43.5 11 30V15l21-8Z" fill="none" stroke="#28c8f5" stroke-width="3"/>
+  <path d="m19 43 9.5-23h7L45 43h-7l-1.8-5H27.7l-1.8 5H19Zm11-11.2h4l-2-5.8-2 5.8Z" fill="#f8fbff"/>
+</svg>
