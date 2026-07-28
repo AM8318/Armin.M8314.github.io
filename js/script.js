@@ -13,7 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileNav = document.querySelector("#primaryNav");
   const navLinks = [...document.querySelectorAll(".navbar .nav-link")];
   const sections = [...document.querySelectorAll("main section[id]")];
-  const revealItems = document.querySelectorAll(".reveal");
+  const allRevealItems = [...document.querySelectorAll(".reveal")];
+  const heroRevealItems = allRevealItems.filter((item) => item.closest("#home"));
+  const scrollRevealItems = allRevealItems.filter((item) => !item.closest("#home"));
   const backToTop = document.querySelector(".back-to-top");
   const year = document.querySelector("#current-year");
   const particleLayer = document.querySelector("#cyber-particle-layer");
@@ -33,6 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const isMobile = window.innerWidth < 576;
     const isTablet = window.innerWidth < 992;
     const particleCount = isMobile ? 6 : isTablet ? 10 : 18;
+    const cloudOriginBands = isMobile
+      ? [[1, 44], [50, 47]]
+      : isTablet
+        ? [[2, 38], [47, 47]]
+        : [[2, 27], [34, 35], [72, 25]];
     const symbolIds = [
       "cyber-lock",
       "cyber-shield",
@@ -57,16 +64,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const particle = document.createElement("span");
       particle.className = useTextLabel ? "cyber-code-label" : "cyber-particle";
 
-      const xPosition = 4 + Math.random() * 91;
+      // Distribute symbols beneath the visible cloud formations instead of uniformly across the viewport.
+      const originBand = cloudOriginBands[index % cloudOriginBands.length];
+      const xPosition = originBand[0] + Math.random() * originBand[1];
       const duration = 17 + Math.random() * 15;
       const delay = -(Math.random() * duration);
       const drift = -32 + Math.random() * 64;
       const startRotation = -15 + Math.random() * 30;
       const endRotation = -38 + Math.random() * 76;
-      const opacity = 0.09 + Math.random() * 0.1;
+      const opacity = 0.13 + Math.random() * 0.1;
 
       particle.style.setProperty("--x", `${xPosition}%`);
-      particle.style.setProperty("--start-y", `${90 + Math.random() * 95}px`);
+      particle.style.setProperty("--start-y", `${105 + Math.random() * (isMobile ? 74 : 96)}px`);
       particle.style.setProperty("--duration", `${duration}s`);
       particle.style.setProperty("--delay", `${delay}s`);
       particle.style.setProperty("--drift-x", `${drift}px`);
@@ -79,10 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       if (useTextLabel) {
-        particle.style.setProperty("--size", `${0.52 + Math.random() * 0.18}rem`);
+        particle.style.setProperty("--size", `${0.56 + Math.random() * 0.18}rem`);
         particle.textContent = codeLabels[index % codeLabels.length];
       } else {
-        particle.style.setProperty("--size", `${18 + Math.random() * (isMobile ? 7 : 15)}px`);
+        particle.style.setProperty("--size", `${20 + Math.random() * (isMobile ? 8 : 16)}px`);
         const svg = document.createElementNS(svgNamespace, "svg");
         const use = document.createElementNS(svgNamespace, "use");
         use.setAttribute("href", `#${symbolIds[index % symbolIds.length]}`);
@@ -121,11 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
     { passive: true }
   );
 
-  motionPreference.addEventListener("change", () => {
-    particleLayer?.replaceChildren();
-    createCyberParticles();
-  });
-
   // Header and utility-control states share one passive scroll listener.
   const updateScrollState = () => {
     header?.classList.toggle("is-scrolled", window.scrollY > 24);
@@ -135,22 +139,43 @@ document.addEventListener("DOMContentLoaded", () => {
   updateScrollState();
   window.addEventListener("scroll", updateScrollState, { passive: true });
 
-  if ("IntersectionObserver" in window && !motionPreference.matches) {
-    const revealObserver = new IntersectionObserver(
-      (entries, observer) => {
+  // Hero content receives its existing load reveal once and is never reset by scrolling.
+  heroRevealItems.forEach((item) => item.classList.add("is-visible"));
+
+  let revealObserver;
+
+  /**
+   * Rebuilds the section reveal observer when the motion preference changes.
+   * A zero threshold keeps visible content active until it has fully left the viewport.
+   */
+  const initializeRevealObserver = () => {
+    revealObserver?.disconnect();
+    revealObserver = undefined;
+
+    if (!("IntersectionObserver" in window) || motionPreference.matches) {
+      scrollRevealItems.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+
+    revealObserver = new IntersectionObserver(
+      (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
+          entry.target.classList.toggle("is-visible", entry.isIntersecting);
         });
       },
-      { threshold: 0.08, rootMargin: "0px 0px -42px" }
+      { threshold: 0 }
     );
 
-    revealItems.forEach((item) => revealObserver.observe(item));
-  } else {
-    revealItems.forEach((item) => item.classList.add("is-visible"));
-  }
+    scrollRevealItems.forEach((item) => revealObserver.observe(item));
+  };
+
+  initializeRevealObserver();
+
+  motionPreference.addEventListener("change", () => {
+    particleLayer?.replaceChildren();
+    createCyberParticles();
+    initializeRevealObserver();
+  });
 
   // Track the section occupying the central reading area.
   if ("IntersectionObserver" in window) {

@@ -5,16 +5,15 @@ A production-ready, responsive one-page portfolio for Armin Moallemi, a Toronto 
 ## Features
 
 - Complete education, skills, experience, project, volunteering, award, and certification content
-- Every volunteer activity from the current résumé
+- Every supplied volunteer activity
 - Dark cybersecurity command-center interface with steel-gray borders, cyan/blue glow, HUD separators, scanning states, and system-status panels
-- Lightweight hero animation with digital clouds, animated network paths, and drifting security/technology symbols
+- Lightweight hero animation with layered digital cloud formations, animated network paths, and drifting security/technology symbols
 - Reduced particle count on mobile
 - Full `prefers-reduced-motion` support
 - Responsive Bootstrap navigation with active-section tracking
 - Accessible focus states, skip navigation, semantic landmarks, and descriptive image text
-- Downloadable PDF résumé
-- Supplied email and LinkedIn destinations
-- Secure project modules, system-event timelines, credential record badges, and clearly marked placeholders instead of invented links
+- Supplied email, LinkedIn, and GitHub destinations
+- Secure project modules, system-event timelines, and credential record badges without invented project links
 - Search, answer-engine, local-context, structured-data, and social-sharing metadata
 
 ## Technologies
@@ -31,6 +30,7 @@ There is no framework, build process, backend, database, jQuery dependency, anim
 
 ```text
 /
+├── .gitignore
 ├── index.html
 ├── README.md
 ├── css/
@@ -41,13 +41,11 @@ There is no framework, build process, backend, database, jQuery dependency, anim
     ├── images/
     │   ├── armin-moallemi-portrait.jpg
     │   └── social-preview.png
-    ├── icons/
-    │   └── favicon.svg
-    └── resume/
-        └── armin-moallemi-resume.pdf
+    └── icons/
+        └── favicon.svg
 ```
 
-Original source documents can remain in the repository root for private maintenance. The deployed page only references files inside the structure above.
+Keep original workshop/source documents out of the published repository. The included `.gitignore` excludes the supplied root-level source files; the optimized deployment copies live under `assets/`. If a private source file was already committed previously, remove it from Git tracking before publishing.
 
 ## Run locally
 
@@ -72,13 +70,10 @@ An internet connection is needed for the Bootstrap CDN. All project-specific fil
 The following information was not supplied and has not been invented:
 
 - `[Add public URL]` — currently used in `og:url`; replace after deployment.
-- `[Add GitHub URL]` — shown as a non-interactive contact placeholder.
-- `[Add link]` — project GitHub and demo placeholders.
-- `[Add document]` — project case-study or design-document placeholders.
 - `[Add project image]` — add only when a real screenshot or project image is available.
 - `[Confirm whether to display phone number]` — the phone number is intentionally omitted from the public page.
 
-Disabled project controls are deliberate placeholders and do not create broken navigation.
+Project cards intentionally omit action controls until verified project-specific destinations are available.
 
 ## Update content
 
@@ -86,22 +81,16 @@ Disabled project controls are deliberate placeholders and do not create broken n
 
 Edit the appropriate semantic section in `index.html`. Keep dates inside `<time>` elements and maintain the existing heading order.
 
-When changing name, email, location, education, profile URLs, or knowledge areas, also update:
+When changing name, email, location, education, LinkedIn/GitHub profile URLs, or knowledge areas, also update:
 
 - Page title and meta description
 - Open Graph and Twitter/X metadata
 - JSON-LD structured data
 - Footer and contact links
 
-### Replace the résumé
+### Keep private documents private
 
-Replace:
-
-```text
-assets/resume/armin-moallemi-resume.pdf
-```
-
-Keep the same filename to avoid changing links. If the filename changes, search `index.html` for the old path and update every occurrence.
+No résumé file or public résumé link is included in the deployable site. Keep private source documents outside the `assets/` tree and covered by `.gitignore` so they are not published with the portfolio.
 
 ### Replace the portrait
 
@@ -125,13 +114,7 @@ If the new image has different dimensions, update its `width`, `height`, and alt
 
 ### Add a verified project link
 
-Replace a disabled placeholder such as:
-
-```html
-<button type="button" disabled>GitHub · [Add link]</button>
-```
-
-with a descriptive link:
+Add a descriptive link to the relevant project card only after its destination has been verified:
 
 ```html
 <a href="VERIFIED_URL" target="_blank" rel="noopener noreferrer">
@@ -166,7 +149,7 @@ The primary design tokens are at the top of `css/style.css`:
 }
 ```
 
-After changing colors, recheck body text, button, border, focus-ring, and placeholder contrast.
+After changing colors, recheck body text, button, border, focus-ring, and muted-text contrast.
 
 ## Customize animation intensity
 
@@ -208,7 +191,7 @@ The `cyber-drift` keyframes are in `css/style.css`. Keep opacity low and movemen
 <link rel="canonical" href="YOUR_PUBLIC_URL">
 ```
 
-12. Test every navigation, email, LinkedIn, and résumé-download link on the published site.
+12. Test every navigation, email, LinkedIn, and GitHub link on the published site.
 
 A project-site URL normally looks like:
 
@@ -229,7 +212,7 @@ https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/
 - No information communicated through color alone
 - All content remains visible if JavaScript is unavailable
 - Moving particles and scan effects disabled for reduced-motion users
-- Nonexistent project destinations shown as disabled placeholders
+- Unavailable project destinations are omitted instead of rendered as broken controls
 
 Keyboard-test with Tab, Shift+Tab, Enter, Space, and Escape.
 
@@ -262,7 +245,7 @@ Verify:
 - Mobile shows fewer animated elements
 - Reduced-motion mode removes moving background effects
 - All nine navigation destinations work
-- Resume downloads correctly
-- Email and LinkedIn links open correctly
+- Email, LinkedIn, and GitHub links open correctly
+- No private résumé file or résumé link is present in the published output
 - No console errors or missing asset requests
 - Social preview remains 1200 × 630 after visual changes
