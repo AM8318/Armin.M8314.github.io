@@ -142,31 +142,54 @@ document.addEventListener("DOMContentLoaded", () => {
   // Hero content receives its existing load reveal once and is never reset by scrolling.
   heroRevealItems.forEach((item) => item.classList.add("is-visible"));
 
-  let revealObserver;
+  let revealEnterObserver;
+  let revealResetObserver;
+  const revealEnterThreshold = 0.08;
+  const revealResetThreshold = 0.05;
 
   /**
-   * Rebuilds the section reveal observer when the motion preference changes.
-   * A zero threshold keeps visible content active until it has fully left the viewport.
+   * Rebuilds the section reveal observers when the motion preference changes.
+   * Separate entry/reset boundaries add hysteresis and prevent edge flicker.
    */
   const initializeRevealObserver = () => {
-    revealObserver?.disconnect();
-    revealObserver = undefined;
+    revealEnterObserver?.disconnect();
+    revealResetObserver?.disconnect();
+    revealEnterObserver = undefined;
+    revealResetObserver = undefined;
 
     if (!("IntersectionObserver" in window) || motionPreference.matches) {
       scrollRevealItems.forEach((item) => item.classList.add("is-visible"));
       return;
     }
 
-    revealObserver = new IntersectionObserver(
+    // Reveal after a small but meaningful part of the element enters the viewport.
+    revealEnterObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          entry.target.classList.toggle("is-visible", entry.isIntersecting);
+          if (entry.isIntersecting && entry.intersectionRatio >= revealEnterThreshold) {
+            entry.target.classList.add("is-visible");
+          }
         });
       },
-      { threshold: 0 }
+      { threshold: revealEnterThreshold, rootMargin: "-36px 0px 0px 0px" }
     );
 
-    scrollRevealItems.forEach((item) => revealObserver.observe(item));
+    // Reset near the viewport edge, below the entry threshold, to prevent flicker.
+    revealResetObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || entry.intersectionRatio <= revealResetThreshold) {
+            entry.target.classList.remove("is-visible");
+          }
+        });
+      },
+      { threshold: [0, revealResetThreshold], rootMargin: "0px" }
+    );
+
+    scrollRevealItems.forEach((item) => {
+      revealEnterObserver.observe(item);
+      revealResetObserver.observe(item);
+    });
   };
 
   initializeRevealObserver();

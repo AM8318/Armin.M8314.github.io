@@ -1849,6 +1849,19 @@ main section[id] {
   transform: translateY(0);
 }
 
+/* Stronger reversible motion is limited to non-hero content. */
+.js main section:not(#home) .reveal {
+  transform: translateY(36px);
+  transition:
+    opacity 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js main section:not(#home) .reveal.is-visible {
+  transform: translateY(0);
+  transition-duration: 650ms;
+}
+
 .js .reveal.is-visible.reveal-delay-sm {
   transition-delay: 80ms;
 }
@@ -2206,8 +2219,9 @@ main section[id] {
   }
 
   .js .reveal {
-    opacity: 1;
-    transform: none;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 
