@@ -9,6 +9,39 @@
 document.documentElement.classList.add("js");
 
 document.addEventListener("DOMContentLoaded", () => {
+  const getawayLightbox = document.querySelector("#getaway-lightbox");
+  if (getawayLightbox) {
+    const lightboxImage = getawayLightbox.querySelector(".getaway-lightbox-image");
+    const lightboxTitle = getawayLightbox.querySelector("h2");
+    let imageTrigger;
+
+    document.querySelectorAll(".getaway-media-link").forEach((button) => {
+      button.addEventListener("click", () => {
+        const image = button.querySelector("img");
+        imageTrigger = button;
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt;
+        lightboxTitle.textContent = button.closest(".getaway-stage").querySelector("h4").textContent;
+        getawayLightbox.showModal();
+        document.body.classList.add("getaway-lightbox-open");
+      });
+    });
+
+    getawayLightbox.querySelector(".getaway-lightbox-close").addEventListener("click", () => {
+      getawayLightbox.close();
+    });
+    // Backdrop and panel padding dismiss the viewer; the image remains interactive.
+    getawayLightbox.addEventListener("click", (event) => {
+      if (event.target === getawayLightbox) getawayLightbox.close();
+    });
+    // Native dialog Escape handling also fires this event and restores page scrolling.
+    getawayLightbox.addEventListener("close", () => {
+      document.body.classList.remove("getaway-lightbox-open");
+      lightboxImage.removeAttribute("src");
+      imageTrigger?.focus({ preventScroll: true });
+    });
+  }
+
   const header = document.querySelector("#site-header");
   const mobileNav = document.querySelector("#primaryNav");
   const navLinks = [...document.querySelectorAll(".navbar .nav-link")];
