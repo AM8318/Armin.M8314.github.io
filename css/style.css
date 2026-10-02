@@ -1453,6 +1453,7 @@ main section[id] {
 
 .getaway-stage {
   min-width: 0;
+  scroll-margin-top: 1rem;
 }
 
 .getaway-stage-label {
