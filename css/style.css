@@ -1439,6 +1439,33 @@ main section[id] {
   color: var(--cyan);
 }
 
+.project-gameplay {
+  margin: 0 0 1.1rem;
+  scroll-margin-top: 100px;
+}
+
+.project-gameplay h4 {
+  margin: 0 0 0.75rem;
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.project-gameplay video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  background: #000;
+}
+
+.project-gameplay figcaption {
+  margin-top: 0.65rem;
+  color: var(--text-soft);
+  font-size: 0.75rem;
+}
+
 /* Getaway Driver development archive */
 .getaway-development {
   display: grid;
