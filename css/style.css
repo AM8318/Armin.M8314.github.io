@@ -1264,6 +1264,11 @@ main section[id] {
 .visual-basketball > small {
   position: absolute;
   bottom: 1.25rem;
+}
+
+.visual-getaway > small,
+.visual-basketball > small,
+.event-cover-caption > small {
   color: #6b8197;
   font-family: Consolas, "Courier New", monospace;
   font-size: 0.52rem;
@@ -1332,6 +1337,70 @@ main section[id] {
   display: grid;
   place-items: center;
   background: linear-gradient(145deg, #0a1828, #142137);
+}
+
+.visual-events {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(43, 216, 247, 0.08), transparent 60%),
+    linear-gradient(145deg, #0b1a2b, #102b3b);
+}
+
+.project-event-booking {
+  --event-content-inset: 1.5rem;
+}
+
+.event-cover-caption {
+  position: absolute;
+  inset-inline: 0;
+  /* Keep the existing cover baseline above the content padding and cover border. */
+  bottom: calc(100% + var(--event-content-inset) + 1px + 1.25rem);
+  text-align: left;
+}
+
+.event-cover-caption > small {
+  display: block;
+}
+
+.project-event-booking > .project-content {
+  padding: var(--event-content-inset);
+}
+
+.event-content-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.visual-events svg {
+  width: 82%;
+  max-width: 360px;
+  fill: none;
+  stroke: #9eefff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 5px rgba(43, 216, 247, 0.35));
+}
+
+.visual-events svg :is(path, circle, rect) {
+  fill: none;
+  stroke: inherit;
+}
+
+.visual-events .event-arrows {
+  stroke: #2bd8f7;
+  stroke-width: 1.5;
+}
+
+.visual-events .event-selected {
+  stroke: #2bd8f7;
+}
+
+.visual-events .event-check {
+  stroke: #2bd8f7;
+  stroke-width: 3;
 }
 
 .gauge {
@@ -2267,6 +2336,10 @@ body.getaway-lightbox-open {
   .project-content,
   .project-featured .project-content {
     padding: 1.2rem;
+  }
+
+  .project-event-booking {
+    --event-content-inset: 1.2rem;
   }
 
   .experience-top time,
