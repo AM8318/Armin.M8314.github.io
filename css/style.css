@@ -1275,6 +1275,12 @@ main section[id] {
   letter-spacing: 0.13em;
 }
 
+.visual-basketball > small,
+.event-cover-caption > small {
+  font-size: clamp(0.875rem, 4.2vw, 1.03125rem);
+  white-space: nowrap;
+}
+
 .network-map {
   position: absolute;
   inset: 10% 8%;
@@ -1337,6 +1343,35 @@ main section[id] {
   display: grid;
   place-items: center;
   background: linear-gradient(145deg, #0a1828, #142137);
+}
+
+.project-game-art {
+  width: 82%;
+  max-width: 360px;
+  height: auto;
+  fill: none;
+  stroke: #9eefff;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px rgba(43, 216, 247, 0.28));
+}
+
+.project-game-art .game-art-accent,
+.project-game-art .game-art-motion {
+  stroke: var(--cyan);
+}
+
+.project-game-art .game-art-muted {
+  stroke: #72afc2;
+  opacity: 0.7;
+  stroke-width: 1.4;
+}
+
+.project-game-art .game-art-shot {
+  stroke: #72afc2;
+  stroke-dasharray: 4 6;
+  stroke-width: 1.4;
 }
 
 .visual-events {
